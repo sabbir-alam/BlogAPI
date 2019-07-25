@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogAPI.BusinessLogic;
+using BlogAPI.repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +27,17 @@ namespace BlogAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSingleton<IPostRepository, PostRepositoryWithMemory>();
+            services.AddSingleton<IAuthorRepository, AuthorRepository>();
+            services.AddSingleton<ICommentRepository, CommentRepository>();
+            
+
+            services.AddSingleton<IPostManager, PostManager>();
+            services.AddSingleton<ICommentManager, CommentManager>();
+            services.AddSingleton<IAuthorManager, AuthorManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
