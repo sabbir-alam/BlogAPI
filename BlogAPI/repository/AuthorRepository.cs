@@ -8,7 +8,7 @@ namespace BlogAPI.repository
 {
     public class AuthorRepository : IAuthorRepository
     {
-        private List<Author> authors = new List<Author>();
+        private List<Author> _authors = new List<Author>();
         public AuthorRepository()
         {
             Author author = new Author
@@ -17,39 +17,39 @@ namespace BlogAPI.repository
                 Id = 1,
                 Email = "ragib22@gmail.com"
             };
-            authors.Add(author);
-            authors.Add(author);
-            authors.Add(author);
-            authors.Add(author);
+            _authors.Add(author);
+            _authors.Add(author);
+            _authors.Add(author);
+            _authors.Add(author);
 
         }
 
         public void DeleteById(int id)
         {
-            authors.Remove(authors.Find(x => x.Id == id));
+            _authors.Remove(_authors.Find(x => x.Id == id));
         }
 
         public IEnumerable<Author> GetAll()
         {
-            return authors;
+            return _authors;
         }
 
         
         public Author GetById(int id)
         {
-            return authors.Find(x => x.Id==id);
+            return _authors.Find(x => x.Id==id);
         }
 
         public void Save(Author author)
         {
-            if (!authors.Exists(x => x.Id== author.Id)) // create
+            if (!_authors.Exists(x => x.Id== author.Id)) // create
             {
-                author.Id = authors.Max(x => x.Id) + 1;
-                authors.Add(author);
+                author.Id = _authors.Max(x => x.Id) + 1;
+                _authors.Add(author);
             }
             else // update
             {
-                authors[authors.FindIndex(x => x.Id == author.Id)] = author;
+                _authors[_authors.FindIndex(x => x.Id == author.Id)] = author;
             }
         }
     }

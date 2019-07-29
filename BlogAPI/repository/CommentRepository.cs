@@ -8,7 +8,7 @@ namespace BlogAPI.repository
 {
     public class CommentRepository : ICommentRepository
     {
-        List<Comment> comments = new List<Comment>();
+        private List<Comment> _comments = new List<Comment>();
         public CommentRepository()
         {
             Comment comment = new Comment
@@ -28,7 +28,7 @@ namespace BlogAPI.repository
                 Body = "This is a comment",
                 CreatedAt = DateTime.Now
             };
-            comments.Add(comment);
+            _comments.Add(comment);
             comment = new Comment
             {
                 Id = 2,
@@ -46,33 +46,33 @@ namespace BlogAPI.repository
                 Body = "This is a comment",
                 CreatedAt = DateTime.Now
             };
-            comments.Add(comment);
+            _comments.Add(comment);
         }
         public void DeleteById(int id)
         {
-            comments.Remove(comments.Find(x => x.Id == id));
+            _comments.Remove(_comments.Find(x => x.Id == id));
             return;
 
         }
 
         public IEnumerable<Comment> GetAll()
         {
-            return comments;
+            return _comments;
         }
 
         public Comment GetById(int id)
         {
-            return comments.Find(x => x.Id == id);
+            return _comments.Find(x => x.Id == id);
         }
 
         public void Save(Comment comment)
         {
-            comments.Add(comment);
+            _comments.Add(comment);
         }
 
         public void Save(int id, Comment comment)
         {
-            comments[comments.FindIndex(x => x.Id == id)] = comment;
+            _comments[_comments.FindIndex(x => x.Id == id)] = comment;
         }
     }
 }

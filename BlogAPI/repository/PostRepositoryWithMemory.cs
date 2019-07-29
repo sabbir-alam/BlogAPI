@@ -8,7 +8,7 @@ namespace BlogAPI.repository
 {
     public class PostRepositoryWithMemory : IPostRepository
     {
-        private List<Post> posts = new List<Post>();
+        private List<Post> _posts = new List<Post>();
         private int _lastId = 5;
         public PostRepositoryWithMemory()
         {
@@ -30,7 +30,7 @@ namespace BlogAPI.repository
 
             Console.WriteLine(post.Id);
             
-            posts.Add(post);
+            _posts.Add(post);
             post = new Post
             {
                 Body = "dsdc",
@@ -39,7 +39,7 @@ namespace BlogAPI.repository
                 Id = 2,
                 CreatedAt = DateTime.Now
             };
-            posts.Add(post);
+            _posts.Add(post);
             post = new Post
             {
                 Body = "dsdc",
@@ -48,7 +48,7 @@ namespace BlogAPI.repository
                 Id = 3,
                 CreatedAt = DateTime.Now
             };
-            posts.Add(post);
+            _posts.Add(post);
             post = new Post
             {
                 Body = "dsdc",
@@ -57,7 +57,7 @@ namespace BlogAPI.repository
                 Id = 4,
                 CreatedAt = DateTime.Now
             };
-            posts.Add(post);
+            _posts.Add(post);
             post = new Post
             {
                 Body = "dsdc",
@@ -66,39 +66,39 @@ namespace BlogAPI.repository
                 Id = 5,
                 CreatedAt = DateTime.Now
             };
-            posts.Add(post);
+            _posts.Add(post);
             
 
         }
 
         public void DeleteById(int id)
         {
-            posts.Remove(posts.Find(x => x.Id == id));
+            _posts.Remove(_posts.Find(x => x.Id == id));
             return;
            
         }
 
         public IEnumerable<Post> GetAll()
         {
-            return posts;
+            return _posts;
         }
 
         public Post GetById(int id)
         {
             //posts.Single
-            return posts.Find(x => x.Id == id);
+            return _posts.Find(x => x.Id == id);
         }
 
         public void Save(Post post)
         {
-            if (!posts.Exists(x => x.Id==post.Id)) // create
+            if (!_posts.Exists(x => x.Id==post.Id)) // create
             {
-                post.Id = posts.Max(x=> x.Id) + 1;
-                posts.Add(post);
+                post.Id = _posts.Max(x=> x.Id) + 1;
+                _posts.Add(post);
             }
             else // update
             {
-                posts[posts.FindIndex(x => x.Id == post.Id)] = post;
+                _posts[_posts.FindIndex(x => x.Id == post.Id)] = post;
             }
         }
         //public void Save(int id, Post post)
