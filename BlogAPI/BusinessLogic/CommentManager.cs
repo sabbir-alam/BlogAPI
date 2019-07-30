@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlogAPI.Exceptions;
 using BlogAPI.models;
 using BlogAPI.repository;
 
@@ -10,9 +11,13 @@ namespace BlogAPI.BusinessLogic
     public class CommentManager : ICommentManager
     {
         private ICommentRepository _commentRepository;
-        public CommentManager(ICommentRepository commentRepository)
+        private IPostRepository _postRepository;
+        private IAuthorRepository _authorRepository;
+        public CommentManager(ICommentRepository commentRepository,IPostRepository postRepository,IAuthorRepository authorRepository)
         {
             _commentRepository = commentRepository;
+            _postRepository = postRepository;
+            _authorRepository = authorRepository;
         }
         public void DeleteById(int id)
         {
@@ -32,12 +37,25 @@ namespace BlogAPI.BusinessLogic
 
         public void Save(Comment comment)
         {
-            _commentRepository.Save(comment);
+            if (_postRepository.Exists(comment.PostId))
+            {
+                if (_authorRepository.Exists(comment.AuthorId))
+                {
+                    _commentRepository.Save(comment);
+                }
+                else
+                {
+                    throw new AuthorNotFound();
+                }
+            }
+            else throw new PostNotFound();
         }
 
         public void Save(int id, Comment comment)
         {
-            _commentRepository.Save(id, comment);
+            if (_commentRepository.Exists(id))
+                _commentRepository.Save(id, comment);
+            else throw new CommentNotFound();
         }
 
         public bool Validate(Comment comment)

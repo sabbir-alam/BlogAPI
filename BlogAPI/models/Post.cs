@@ -11,6 +11,6 @@ namespace BlogAPI.models
         public String Title { get; set; }
         public String Body { get; set; }
         public DateTime CreatedAt { get; set; }
-        public Author Author { get; set; }
+        public int AuthorId { get; set; }
     }
 }

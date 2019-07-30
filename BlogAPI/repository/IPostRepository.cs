@@ -13,6 +13,7 @@ namespace BlogAPI.repository
         void DeleteById(int id);
         void Save(Post post);
         //void Save(int id, Post post);
+        bool Exists(int id);
 
     }
 }

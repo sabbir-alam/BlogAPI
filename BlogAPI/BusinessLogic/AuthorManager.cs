@@ -36,13 +36,13 @@ namespace BlogAPI.BusinessLogic
         public IEnumerable<Comment> GetComments(int id)
         {
             Author author = GetById(id);
-            return _commentRepository.GetAll().Where(x => x.Author.Id == author.Id);
+            return _commentRepository.GetAll().Where(x => x.AuthorId == author.Id);
         }
 
         public IEnumerable<Post> GetPosts(int id)
         {
             Author author = GetById(id);
-            return _postRepository.GetAll().Where(x=> x.Author.Id==author.Id);
+            return _postRepository.GetAll().Where(x=> x.AuthorId==author.Id);
             
         }
 
@@ -51,7 +51,7 @@ namespace BlogAPI.BusinessLogic
             _authorRepository.Save(author);
         }
 
-        public bool Validate(Author post)
+        public bool Validate(Author author)
         {
             return true;
         }

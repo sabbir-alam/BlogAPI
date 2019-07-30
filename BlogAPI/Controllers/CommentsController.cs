@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogAPI.BusinessLogic;
+using BlogAPI.Exceptions;
 using BlogAPI.models;
 using BlogAPI.repository;
 using Microsoft.AspNetCore.Http;
@@ -36,19 +37,46 @@ namespace BlogAPI.Controllers
 
         // POST: api/Comments
         [HttpPost]
-        public void Post([FromBody] Comment comment)
+        public IActionResult Post([FromBody] Comment comment)
         {
-            if (_commentManager.Validate(comment))
-                _commentManager.Save(comment);
+            try
+            {
+                if (_commentManager.Validate(comment))
+                    _commentManager.Save(comment);
+                return Ok();
+
+            }
+            catch (PostNotFound e)
+            {
+                return BadRequest(e.Data);
+            }
+            catch (AuthorNotFound e)
+            {
+                return BadRequest(e.Data);
+            }
+
 
         }
 
         // PUT: api/Comments/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Comment comment)
+        public IActionResult Put(int id, [FromBody] Comment comment)
         {
-            _commentManager.Validate(comment);
-            _commentManager.Save(id, comment);
+            try
+            {
+                _commentManager.Validate(comment);
+                _commentManager.Save(id, comment);
+                return Ok();
+            }
+            catch(PostNotFound e)
+            {
+                return BadRequest(e.Data);
+            }
+            catch(AuthorNotFound e)
+            {
+                return BadRequest(e.Data);
+            }
+            
         }
 
         // DELETE: api/ApiWithActions/5

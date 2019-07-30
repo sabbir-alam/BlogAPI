@@ -1,4 +1,5 @@
-﻿using BlogAPI.models;
+﻿using BlogAPI.Exceptions;
+using BlogAPI.models;
 using BlogAPI.repository;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace BlogAPI.BusinessLogic
     {
         private IPostRepository _postRepository;
         private ICommentRepository _commentRepository;
-        public PostManager(IPostRepository postRepository, ICommentRepository commentRepository)
+        private IAuthorRepository _authorRepository;
+        public PostManager(IPostRepository postRepository, ICommentRepository commentRepository, IAuthorRepository authorRepository)
         {
             _commentRepository = commentRepository;
             _postRepository = postRepository;
+            _authorRepository = authorRepository;
         }
 
         public void DeleteById(int id)
@@ -35,7 +38,9 @@ namespace BlogAPI.BusinessLogic
 
         public void Save(Post post)
         {
-            _postRepository.Save(post);
+            if (_authorRepository.Exists(post.AuthorId))
+                _postRepository.Save(post);
+            else throw new AuthorNotFound();
         }
 
         //public void Save(int id, Post post)
@@ -61,7 +66,7 @@ namespace BlogAPI.BusinessLogic
         public IEnumerable<Comment> GetComments(int id)
         {
             Post post = GetById(id);
-            return _commentRepository.GetAll().Where(x => x.Post.Id == post.Id);
+            return _commentRepository.GetAll().Where(x => x.PostId == post.Id);
         }
     }
 }

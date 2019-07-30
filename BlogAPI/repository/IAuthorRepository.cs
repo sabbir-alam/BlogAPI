@@ -12,6 +12,7 @@ namespace BlogAPI.repository
         Author GetById(int id);
         void DeleteById(int id);
         void Save(Author author);
+        bool Exists(int id);
 
     }
 }

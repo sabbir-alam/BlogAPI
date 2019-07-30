@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlogAPI.BusinessLogic;
+using BlogAPI.Exceptions;
 using BlogAPI.models;
 using BlogAPI.repository;
 using Microsoft.AspNetCore.Http;
@@ -35,10 +36,22 @@ namespace BlogAPI.Controllers
 
         // POST: api/Posts
         [HttpPost]
-        public void Post([FromBody] Post post)
+        public IActionResult Post([FromBody] Post post)
         {
-            if(_postManager.Validate(post))
-                _postManager.Save(post);
+            try
+            {
+                if (_postManager.Validate(post))
+                {
+                    _postManager.Save(post);
+                }
+                return Ok();
+                    
+            }
+            catch (AuthorNotFound e)
+            {
+                return BadRequest(e.Data);
+            }
+            
 
         }
 

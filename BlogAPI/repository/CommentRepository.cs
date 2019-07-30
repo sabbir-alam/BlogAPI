@@ -14,17 +14,8 @@ namespace BlogAPI.repository
             Comment comment = new Comment
             {
                 Id = 1,
-                Author = new Author
-                {
-                    Id = 1,
-                    Name = "sabbir",
-                    Email = "sabbir@sabbir.com",
-
-                },
-                Post = new Post
-                {
-
-                },
+                AuthorId = 1,
+                PostId = 1,
                 Body = "This is a comment",
                 CreatedAt = DateTime.Now
             };
@@ -32,17 +23,8 @@ namespace BlogAPI.repository
             comment = new Comment
             {
                 Id = 2,
-                Author = new Author
-                {
-                    Id = 1,
-                    Name = "sabbir",
-                    Email = "sabbir@sabbir.com",
-
-                },
-                Post = new Post
-                {
-
-                },
+                AuthorId = 1,
+                PostId = 1,
                 Body = "This is a comment",
                 CreatedAt = DateTime.Now
             };
@@ -53,6 +35,11 @@ namespace BlogAPI.repository
             _comments.Remove(_comments.Find(x => x.Id == id));
             return;
 
+        }
+
+        public bool Exists(int id)
+        {
+            return _comments.Exists(x => x.Id == id);
         }
 
         public IEnumerable<Comment> GetAll()

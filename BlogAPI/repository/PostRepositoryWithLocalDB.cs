@@ -13,6 +13,11 @@ namespace BlogAPI.repository
             throw new NotImplementedException();
         }
 
+        public bool Exists(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Post> GetAll()
         {
             throw new NotImplementedException();

@@ -12,18 +12,13 @@ namespace BlogAPI.repository
         private int _lastId = 5;
         public PostRepositoryWithMemory()
         {
-            Author author = new Author
-            {
-                Id = 1,
-                Name = "sabbir",
-                Email = "sabbir@sabbir.com"
-            };
+            
 
             Post post = new Post
             {
                 Body = "dsdc",
                 Title = "dsdc",
-                Author = author,
+                AuthorId = 1,
                 Id = 1,
                 CreatedAt = DateTime.Now
             };
@@ -35,7 +30,7 @@ namespace BlogAPI.repository
             {
                 Body = "dsdc",
                 Title = "dsdc",
-                Author = author,
+                AuthorId = 1,
                 Id = 2,
                 CreatedAt = DateTime.Now
             };
@@ -44,7 +39,7 @@ namespace BlogAPI.repository
             {
                 Body = "dsdc",
                 Title = "dsdc",
-                Author = author,
+                AuthorId = 1,
                 Id = 3,
                 CreatedAt = DateTime.Now
             };
@@ -53,7 +48,7 @@ namespace BlogAPI.repository
             {
                 Body = "dsdc",
                 Title = "dsdc",
-                Author = author,
+                AuthorId = 1,
                 Id = 4,
                 CreatedAt = DateTime.Now
             };
@@ -62,7 +57,7 @@ namespace BlogAPI.repository
             {
                 Body = "dsdc",
                 Title = "dsdc",
-                Author = author,
+                AuthorId = 1,
                 Id = 5,
                 CreatedAt = DateTime.Now
             };
@@ -76,6 +71,11 @@ namespace BlogAPI.repository
             _posts.Remove(_posts.Find(x => x.Id == id));
             return;
            
+        }
+
+        public bool Exists(int id)
+        {
+            return _posts.Exists(x => x.Id == id);
         }
 
         public IEnumerable<Post> GetAll()

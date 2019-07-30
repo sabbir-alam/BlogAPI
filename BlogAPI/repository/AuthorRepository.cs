@@ -29,6 +29,11 @@ namespace BlogAPI.repository
             _authors.Remove(_authors.Find(x => x.Id == id));
         }
 
+        public bool Exists(int id)
+        {
+            return _authors.Exists(x => x.Id == id);
+        }
+
         public IEnumerable<Author> GetAll()
         {
             return _authors;
@@ -52,5 +57,6 @@ namespace BlogAPI.repository
                 _authors[_authors.FindIndex(x => x.Id == author.Id)] = author;
             }
         }
+        
     }
 }

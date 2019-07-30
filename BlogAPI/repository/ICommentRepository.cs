@@ -13,5 +13,6 @@ namespace BlogAPI.repository
         void DeleteById(int id);
         void Save(Comment comment);
         void Save(int id, Comment comment);
+        bool Exists(int id);
     }
 }
